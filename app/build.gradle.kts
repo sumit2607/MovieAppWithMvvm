@@ -62,8 +62,7 @@ dependencies {
     implementation("androidx.lifecycle:lifecycle-extensions:2.2.0")
     implementation("androidx.room:room-ktx:$roomVersion")
     implementation("androidx.compose.runtime:runtime-livedata:1.4.3")
-    annotationProcessor("androidx.room:room-compiler:$roomVersion")
-        //for lottie animation
+    annotationProcessor("androidx.room:room-compiler:$roomVersion") //for lottie animation
     implementation("com.airbnb.android:lottie-compose:6.0.1")
     //for dynamic sdp and dp
     implementation("com.intuit.sdp:sdp-android:1.1.0")

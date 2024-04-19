@@ -1,10 +1,11 @@
-package com.example.movieappwithmvvm
+package com.example.movieappwithmvvm.ui.activity
 
 import android.os.Bundle
 import androidx.activity.enableEdgeToEdge
 import androidx.appcompat.app.AppCompatActivity
 import androidx.core.view.ViewCompat
 import androidx.core.view.WindowInsetsCompat
+import com.example.movieappwithmvvm.R
 
 class MainActivity : AppCompatActivity() {
 
