@@ -66,5 +66,7 @@ dependencies {
     implementation("com.airbnb.android:lottie-compose:6.0.1")
     //for dynamic sdp and dp
     implementation("com.intuit.sdp:sdp-android:1.1.0")
+    //lottie
+    implementation("com.airbnb.android:lottie:4.2.0")
 
 }
