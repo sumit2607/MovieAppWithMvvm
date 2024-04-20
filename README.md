@@ -26,38 +26,57 @@ Video Call | Video Call is an application where one can share and watch short vi
 
 ## Dependencies
 
-    //agora for video call and live streaming
-    implementation("io.agora.rtc:full-sdk:4.0.1")
-    implementation("commons-codec:commons-codec:1.9")
+  //navigation
+    def nav_version = "2.3.5"
+    implementation("androidx.navigation:navigation-fragment-ktx:$nav_version")
+    implementation("androidx.navigation:navigation-ui-ktx:$nav_version")
+    implementation("androidx.navigation:navigation-dynamic-features-fragment:$nav_version")
+    implementation("androidx.navigation:navigation-compose:2.4.0-rc01")
 
-    //for splash screen animation lottie animation
-    implementation("com.airbnb.android:lottie:3.4.0")
+    //Glide
+    implementation 'com.github.bumptech.glide:glide:4.12.0'
+    annotationProcessor 'com.github.bumptech.glide:compiler:4.12.0'
 
-    //implementation for dynamic dp
-    implementation("com.intuit.sdp:sdp-android:1.1.0")
+    //Retrofit
+    def retrofit2_version = "2.9.0"
+    def okhttp3_version = "4.9.0"
+    implementation 'com.squareup.retrofit2:adapter-rxjava2:2.9.0'
+    implementation "com.squareup.retrofit2:retrofit:$retrofit2_version"
+    implementation "com.squareup.retrofit2:converter-gson:$retrofit2_version"
+    implementation "com.squareup.okhttp3:okhttp:$okhttp3_version"
+    implementation "com.squareup.okhttp3:logging-interceptor:$okhttp3_version"
 
-    //for chat
-    implementation("io.agora.rtc:chat-sdk:1.1.0")
+    //hilt
+    implementation("com.google.dagger:hilt-android:2.38.1")
+    kapt("com.google.dagger:hilt-android-compiler:2.38.1")
 
-    //navigation gra[h
-    implementation("androidx.navigation:navigation-fragment-ktx:2.3.5")
-    implementation("androidx.navigation:navigation-ui-ktx:2.3.5")
+    // ViewModel and LiveData
+    def arch_version = '2.2.0-alpha01'
+    implementation "androidx.lifecycle:lifecycle-extensions:$arch_version"
+    implementation "androidx.lifecycle:lifecycle-viewmodel-ktx:$arch_version"
+    implementation "androidx.lifecycle:lifecycle-livedata-ktx:$arch_version"
+    implementation "androidx.lifecycle:lifecycle-runtime-ktx:$arch_version"
 
-     //for api call retrofit
-    implementation("com.squareup.retrofit2:retrofit:2.9.0")
-    implementation("com.squareup.retrofit2:converter-gson:2.9.0")
-    implementation("com.jakewharton.retrofit:retrofit2-kotlin-coroutines-adapter:0.9.2")
-    implementation("de.hdodenhof:circleimageview:3.1.0")
+    // Coroutines
+    implementation 'org.jetbrains.kotlinx:kotlinx-coroutines-core:1.5.2'
+    implementation 'org.jetbrains.kotlinx:kotlinx-coroutines-android:1.5.2'
 
-     //for video playing
-    implementation("com.google.android.exoplayer:exoplayer-core:2.15.0")
-    implementation("com.google.android.exoplayer:exoplayer-ui:2.15.0")
+    //paging
+    def paging_version = "3.1.0-alpha03"
+    implementation "androidx.paging:paging-runtime-ktx:$paging_version"
 
-    //for image loading
-    implementation("com.facebook.fresco:fresco:3.0.0")
-    implementation("com.squareup.picasso:picasso:2.8")
+    //shimmer
+    implementation 'com.facebook.shimmer:shimmer:0.1.0@aar'
 
-    ## Here are the some screenshots of the cloned application
+    //lottie
+    implementation 'com.airbnb.android:lottie:4.2.0'
+    implementation 'com.intuit.sdp:sdp-android:1.1.1'
+    //room db
+    // Room
+    implementation("androidx.room:room-runtime:2.5.2")
+    implementation("androidx.lifecycle:lifecycle-extensions:2.2.0")
+    implementation("androidx.room:room-ktx:2.5.2")
+    annotationProcessor("androidx.room:room-compiler:2.5.2")    ## Here are the some screenshots of the cloned application
 
 ![GitHub Cards Preview](https://github.com/sumit2607/VideoCallApp/blob/master/1.jpeg)
 ![GitHub Cards Preview](https://github.com/sumit2607/VideoCallApp/blob/master/2.jpeg)
