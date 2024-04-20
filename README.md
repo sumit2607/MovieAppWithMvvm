@@ -92,4 +92,4 @@ This project is free to use.
 
 ## Contact
 
-Have questions or suggestions? Feel free to reach out to Sumit or harnoor via linkdin.
+Have questions or suggestions? Feel free to reach out to Sumit  via linkdin.
