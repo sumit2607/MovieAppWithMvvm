@@ -78,8 +78,8 @@ Video Call | Video Call is an application where one can share and watch short vi
     implementation("androidx.room:room-ktx:2.5.2")
     annotationProcessor("androidx.room:room-compiler:2.5.2")    ## Here are the some screenshots of the cloned application
 
-![GitHub Cards Preview](https://github.com/sumit2607/VideoCallApp/blob/master/1.jpeg)
-![GitHub Cards Preview](https://github.com/sumit2607/VideoCallApp/blob/master/2.jpeg)
+![GitHub Cards Preview](https://github.com/sumit2607/MovieAppWithMvvm/blob/master/my.png)
+
 
 ## Contributing
 
