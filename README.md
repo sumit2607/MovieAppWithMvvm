@@ -1,4 +1,4 @@
-# Saveo-Assignment
+# Movie Stream App
 
 ![Green and Cream Modern Sales Marketing Presentation](https://user-images.githubusercontent.com/81345503/148519032-2bcfc4e6-e240-4e0d-b981-88ea6328020f.png)
 

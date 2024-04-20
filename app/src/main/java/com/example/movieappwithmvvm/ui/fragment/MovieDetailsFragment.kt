@@ -1,11 +1,12 @@
 package com.example.movieappwithmvvm.ui.fragment
 
+import android.content.res.Configuration
 import android.os.Bundle
-import androidx.fragment.app.Fragment
 import android.view.LayoutInflater
 import android.view.View
 import android.view.ViewGroup
 import androidx.databinding.DataBindingUtil
+import androidx.fragment.app.Fragment
 import androidx.navigation.Navigation
 import com.bumptech.glide.Glide
 import com.example.movieappwithmvvm.R
@@ -29,6 +30,7 @@ class MovieDetailsFragment : Fragment() {
 
     private lateinit var detailsBinding: FragmentMovieDetailsBinding
     lateinit var resultModel: ResultModel
+    private var emptyList = emptyList<ResultModel>()
 
     override fun onCreateView(
         inflater: LayoutInflater, container: ViewGroup?,
@@ -41,7 +43,15 @@ class MovieDetailsFragment : Fragment() {
 
     override fun onViewCreated(view: View, savedInstanceState: Bundle?) {
         super.onViewCreated(view, savedInstanceState)
-        resultModel = arguments?.getSerializable("resultModel") as ResultModel
+        //  resultModel = arguments?.getSerializable("resultModel") as ResultModel
+
+        if (savedInstanceState != null) {
+            // Restore resultModel from savedInstanceState
+            resultModel = savedInstanceState.getSerializable("resultModel") as ResultModel
+        } else {
+            // Get resultModel from arguments if savedInstanceState is null
+            resultModel = arguments?.getSerializable("resultModel") as ResultModel
+        }
 
         detailsBinding.apply {
             resultModel.apply {
@@ -62,5 +72,23 @@ class MovieDetailsFragment : Fragment() {
                 }
             }
         }
+    }
+
+    override fun onSaveInstanceState(outState: Bundle) {
+        // Save resultModel to the savedInstanceState bundle
+        outState.putSerializable("resultModel", resultModel)
+        super.onSaveInstanceState(outState)
+    }
+
+    override fun onViewStateRestored(savedInstanceState: Bundle?) {
+        super.onViewStateRestored(savedInstanceState)
+        savedInstanceState?.let {
+            // Restore resultModel from savedInstanceState
+            resultModel = it.getSerializable("resultModel") as ResultModel
+        }
+    }
+
+    override fun onConfigurationChanged(newConfig: Configuration) {
+        super.onConfigurationChanged(newConfig)
     }
 }
