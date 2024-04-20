@@ -16,6 +16,8 @@ import java.util.ArrayList
 import java.util.Random
 
 
+
+//for first view pager
 class NewMovieAdapter(
     val resultModelList: List<ResultModel>,
     val onCardClicked: OnCardClick

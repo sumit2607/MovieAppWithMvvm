@@ -18,7 +18,7 @@ class AppViewModel @Inject constructor(private val appRepo: AppRepo) : ViewModel
 
 
     fun getResponseFromAPI(page: Int): LiveData<Resource<ResponseModel>> {
-        return liveData(Dispatchers.Main) {
+        return liveData(Dispatchers.IO) {
             val response = appRepo.getResponseFromAPI(page)
             Log.d("TAG", "getResponseFromAPI: " + "here in line no 23 " + response)
             emit(response)
