@@ -1,8 +1,11 @@
 package com.example.movieappwithmvvm.di
 
+import android.content.Context
 import com.example.movieappwithmvvm.extra.Constants.BASE_URL
 import com.example.movieappwithmvvm.extra.Constants.TIMEOUT_TIME
 import com.example.movieappwithmvvm.local.APIClient
+import com.example.movieappwithmvvm.local.db.AppDatabase
+import com.example.movieappwithmvvm.local.db.ResultModelDao
 import dagger.Module
 import dagger.Provides
 import dagger.hilt.InstallIn
@@ -34,5 +37,7 @@ object AppModule {
             .build()
         return builder.create(APIClient::class.java)
     }
+
+
 
 }

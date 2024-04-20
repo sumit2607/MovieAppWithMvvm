@@ -96,5 +96,11 @@ dependencies {
     //lottie
     implementation 'com.airbnb.android:lottie:4.2.0'
     implementation 'com.intuit.sdp:sdp-android:1.1.1'
+    //room db
+    // Room
+    implementation("androidx.room:room-runtime:2.5.2")
+    implementation("androidx.lifecycle:lifecycle-extensions:2.2.0")
+    implementation("androidx.room:room-ktx:2.5.2")
+    annotationProcessor("androidx.room:room-compiler:2.5.2")
 
 }
