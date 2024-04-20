@@ -24,6 +24,6 @@
             app:destination="@id/homeFragment" />
         <argument
             android:name="movieDetails"
-            app:argType="com.aditya.movieapp.local.responses.ResultModel" />
+            app:argType="com.example.movieappwithmvvm.local.response.ResultModel" />
     </fragment>
 </navigation>

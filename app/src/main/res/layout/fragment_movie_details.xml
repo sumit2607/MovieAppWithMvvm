@@ -8,6 +8,7 @@
         android:layout_height="match_parent"
         android:orientation="vertical"
         android:weightSum="2"
+        android:background="@color/white"
         tools:context=".ui.fragments.MovieDetailsFragment">
 
         <androidx.constraintlayout.widget.ConstraintLayout
@@ -247,6 +248,7 @@
                 android:paddingTop="@dimen/sp_15"
                 android:paddingEnd="@dimen/dp_40"
                 android:paddingBottom="@dimen/sp_15"
+                android:background="@color/white"
                 android:text="BOOK NOW"
                 android:textColor="@color/blue_bg" />
         </androidx.cardview.widget.CardView>
