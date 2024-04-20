@@ -79,7 +79,7 @@ Movie Data | Movie Stream is an application where one can share and watch short 
     annotationProcessor("androidx.room:room-compiler:2.5.2")    ## Here are the some screenshots of the cloned application
 
 ![GitHub Cards Preview](https://github.com/sumit2607/MovieAppWithMvvm/blob/master/my.png)
-[![Video](http://img.youtube.com/vi/YOUR_VIDEO_ID_HERE/0.jpg)](https://www.youtube.com/shorts/31eYJoLFo6I)
+[![Video](https://github.com/sumit2607/MovieAppWithMvvm/blob/master/my.png)](https://www.youtube.com/shorts/31eYJoLFo6I)
 
 
 ## Contributing
