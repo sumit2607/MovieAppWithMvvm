@@ -7,13 +7,14 @@ import com.example.movieappwithmvvm.extra.Constants.API_KEY
 import com.example.movieappwithmvvm.local.APIClient
 import com.example.movieappwithmvvm.local.Resource
 import com.example.movieappwithmvvm.local.ResponseHandler
-import com.example.movieappwithmvvm.local.db.AppDatabase
 import com.example.movieappwithmvvm.local.db.ResultModelDao
 import com.example.movieappwithmvvm.local.response.ResponseModel
 import javax.inject.Inject
 
-class AppRepo @Inject constructor(private val apiClient: APIClient) {
-
+class AppRepo @Inject constructor(
+    private val myDao: ResultModelDao,
+    private val apiClient: APIClient
+) {
     private val responseHandler = ResponseHandler()
 
 
@@ -26,16 +27,19 @@ class AppRepo @Inject constructor(private val apiClient: APIClient) {
         }
     ).liveData
 
+    suspend fun getAllDataFromDB(): ResponseModel? {
+        return myDao.getResponseModelByPage(1)
+    }
+
     suspend fun getResponseFromAPI(page: Int): Resource<ResponseModel> {
         val response = apiClient.getResponseFromAPI(API_KEY, page)
 
 
         return try {
-//            if (response!=null){
-//                roomDb.resultModelDao().insertResultModel(response)
-//            }
+
+            myDao.insertResultModel(response)
             responseHandler.handleSuccess(response)
-        }catch (e: Exception){
+        } catch (e: Exception) {
             responseHandler.handleException(e)
         }
     }

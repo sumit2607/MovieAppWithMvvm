@@ -16,6 +16,7 @@ import androidx.recyclerview.widget.GridLayoutManager
 import com.example.movieappwithmvvm.R
 import com.example.movieappwithmvvm.databinding.FragmentHomeBinding
 import com.example.movieappwithmvvm.local.Status
+import com.example.movieappwithmvvm.local.db.AppDatabase
 import com.example.movieappwithmvvm.local.response.OnCardClick
 import com.example.movieappwithmvvm.local.response.ResultModel
 import com.example.movieappwithmvvm.ui.adapter.MovieAdapter
@@ -38,7 +39,7 @@ private const val ARG_PARAM2 = "param2"
  */
 @AndroidEntryPoint
 class HomeFragment : Fragment(), OnCardClick {
-
+    // Inject ResultModelDao using field injection
     val viewModel: AppViewModel by viewModels()
     private lateinit var homeBinding: FragmentHomeBinding
     lateinit var movieAdapter: MovieAdapter
@@ -49,6 +50,7 @@ class HomeFragment : Fragment(), OnCardClick {
     override fun onCreate(savedInstanceState: Bundle?) {
         super.onCreate(savedInstanceState)
         // Restore myData from savedInstanceState if available
+
         savedInstanceState?.let {
             emptyList = it.getSerializable("data") as ArrayList<ResultModel>
         }
@@ -65,7 +67,6 @@ class HomeFragment : Fragment(), OnCardClick {
 
     override fun onViewCreated(view: View, savedInstanceState: Bundle?) {
         super.onViewCreated(view, savedInstanceState)
-
         setAdapter()
 
         viewModel.getMovieResponse().observe(viewLifecycleOwner, Observer {
@@ -99,7 +100,8 @@ class HomeFragment : Fragment(), OnCardClick {
         } else {
             // Use data from saved instance state
             Log.d("TAG", "onViewCreated: " + "here in line no 101")
-            emptyList = savedInstanceState.getSerializable("data") as? List<ResultModel> ?: emptyList
+            emptyList =
+                savedInstanceState.getSerializable("data") as? List<ResultModel> ?: emptyList
             val adaptor = NewMovieAdapter(emptyList, this)
             homeBinding.rvTopMovies.adapter = adaptor
         }
@@ -137,7 +139,5 @@ class HomeFragment : Fragment(), OnCardClick {
 
     }
 
-    override fun onConfigurationChanged(newConfig: Configuration) {
-        super.onConfigurationChanged(newConfig)
-    }
+
 }
