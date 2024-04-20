@@ -23,5 +23,8 @@ class AppViewModel @Inject constructor(private val appRepo: AppRepo) : ViewModel
             Log.d("TAG", "getResponseFromAPI: " + "here in line no 23 " + response)
             emit(response)
         }
+
     }
+
+
 }

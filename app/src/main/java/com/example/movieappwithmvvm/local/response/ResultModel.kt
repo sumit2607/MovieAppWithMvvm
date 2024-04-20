@@ -1,6 +1,8 @@
 package com.example.movieappwithmvvm.local.response
 
 
+import android.os.Parcel
+import android.os.Parcelable
 import com.google.gson.annotations.SerializedName
 import java.io.Serializable
 
@@ -33,4 +35,4 @@ data class ResultModel(
     val voteAverage: Double,
     @SerializedName("vote_count")
     val voteCount: Int
-) : Serializable
+) :Serializable

@@ -1,12 +1,14 @@
 package com.example.movieappwithmvvm.ui.fragment
 
+import android.content.res.Configuration
 import android.os.Bundle
-import androidx.fragment.app.Fragment
+import android.util.Log
 import android.view.LayoutInflater
 import android.view.View
 import android.view.ViewGroup
 import android.widget.Toast
 import androidx.databinding.DataBindingUtil
+import androidx.fragment.app.Fragment
 import androidx.fragment.app.viewModels
 import androidx.lifecycle.Observer
 import androidx.navigation.Navigation
@@ -41,7 +43,16 @@ class HomeFragment : Fragment(), OnCardClick {
     private lateinit var homeBinding: FragmentHomeBinding
     lateinit var movieAdapter: MovieAdapter
     private var emptyList = emptyList<ResultModel>()
+    // private var myData = ArrayList<ResultModel>()
 
+
+    override fun onCreate(savedInstanceState: Bundle?) {
+        super.onCreate(savedInstanceState)
+        // Restore myData from savedInstanceState if available
+        savedInstanceState?.let {
+            emptyList = it.getSerializable("data") as ArrayList<ResultModel>
+        }
+    }
 
     override fun onCreateView(
         inflater: LayoutInflater, container: ViewGroup?,
@@ -51,34 +62,48 @@ class HomeFragment : Fragment(), OnCardClick {
         return homeBinding.root
     }
 
+
     override fun onViewCreated(view: View, savedInstanceState: Bundle?) {
         super.onViewCreated(view, savedInstanceState)
 
         setAdapter()
+
         viewModel.getMovieResponse().observe(viewLifecycleOwner, Observer {
             it?.let {
                 CoroutineScope(Dispatchers.IO).launch {
-
                     movieAdapter.submitData(it)
                 }
             }
         })
 
-        viewModel.getResponseFromAPI(1).observe(viewLifecycleOwner, Observer {
-            when (it.status) {
-                Status.ERROR ->{
-                    Toast.makeText(context, "Error", Toast.LENGTH_SHORT).show()
-                }
 
-                Status.SUCCESS ->{
-                    emptyList = it.data?.resultModels as ArrayList<ResultModel>
-                    val adaptor = NewMovieAdapter(emptyList,this)
-                    homeBinding.rvTopMovies.adapter = adaptor
-                }
+        if (savedInstanceState == null) {
+            // No saved instance state, make the API call
+            Log.d("TAG", "onViewCreated: " + "here in line no 82")
+            viewModel.getResponseFromAPI(1).observe(viewLifecycleOwner, Observer {
+                when (it.status) {
+                    Status.ERROR -> {
+                        Toast.makeText(context, "Error", Toast.LENGTH_SHORT).show()
+                    }
 
-                Status.LOADING -> TODO()
-            }
-        })
+                    Status.SUCCESS -> {
+                        emptyList = it.data?.resultModels as ArrayList<ResultModel>
+                        val adaptor = NewMovieAdapter(emptyList, this)
+                        homeBinding.rvTopMovies.adapter = adaptor
+                    }
+
+                    Status.LOADING -> TODO()
+                }
+            })
+
+        } else {
+            // Use data from saved instance state
+            Log.d("TAG", "onViewCreated: " + "here in line no 101")
+            emptyList = savedInstanceState.getSerializable("data") as? List<ResultModel> ?: emptyList
+            val adaptor = NewMovieAdapter(emptyList, this)
+            homeBinding.rvTopMovies.adapter = adaptor
+        }
+
 
     }
 
@@ -98,4 +123,21 @@ class HomeFragment : Fragment(), OnCardClick {
             .navigate(R.id.action_homeFragment_to_movieDetailsFragment, bundle)
     }
 
+    override fun onSaveInstanceState(outState: Bundle) {
+        outState.putSerializable("data", emptyList as ArrayList)
+        super.onSaveInstanceState(outState)
+    }
+
+    override fun onViewStateRestored(savedInstanceState: Bundle?) {
+        super.onViewStateRestored(savedInstanceState)
+        savedInstanceState?.let {
+            emptyList = it.getSerializable("data") as ArrayList<ResultModel>
+            // Now you can use myData after restoring
+        }
+
+    }
+
+    override fun onConfigurationChanged(newConfig: Configuration) {
+        super.onConfigurationChanged(newConfig)
+    }
 }
