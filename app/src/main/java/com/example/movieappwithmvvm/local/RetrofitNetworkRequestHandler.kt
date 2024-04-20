@@ -74,4 +74,8 @@ open class ResponseHandler {
             else -> "Something went wrong"
         }
     }
+
+    fun handleSuccess(data: ResponseModel?): Resource<ResponseModel> {
+
+    }
 }

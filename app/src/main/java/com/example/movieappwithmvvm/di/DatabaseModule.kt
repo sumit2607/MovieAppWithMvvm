@@ -29,4 +29,6 @@ object DatabaseModule {
     fun provideResultModelDao(appDatabase: AppDatabase): ResultModelDao {
         return appDatabase.resultModelDao()
     }
+
+
 }

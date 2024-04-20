@@ -1,5 +1,6 @@
 package com.example.movieappwithmvvm.di
 
+import android.app.Application
 import android.content.Context
 import com.example.movieappwithmvvm.extra.Constants.BASE_URL
 import com.example.movieappwithmvvm.extra.Constants.TIMEOUT_TIME
@@ -37,7 +38,10 @@ object AppModule {
             .build()
         return builder.create(APIClient::class.java)
     }
-
-
+    @Provides
+    @Singleton
+    fun provideApplicationContext(application: Application): Context {
+        return application.applicationContext
+    }
 
 }
