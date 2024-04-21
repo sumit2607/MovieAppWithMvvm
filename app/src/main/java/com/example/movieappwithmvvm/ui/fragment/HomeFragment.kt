@@ -1,30 +1,26 @@
 package com.example.movieappwithmvvm.ui.fragment
 
-import android.content.res.Configuration
 import android.os.Bundle
 import android.util.Log
 import android.view.LayoutInflater
 import android.view.View
 import android.view.ViewGroup
-import android.widget.Toast
 import androidx.databinding.DataBindingUtil
 import androidx.fragment.app.Fragment
 import androidx.fragment.app.viewModels
 import androidx.lifecycle.Observer
+import androidx.lifecycle.lifecycleScope
 import androidx.navigation.Navigation
 import androidx.recyclerview.widget.GridLayoutManager
 import com.example.movieappwithmvvm.R
 import com.example.movieappwithmvvm.databinding.FragmentHomeBinding
-import com.example.movieappwithmvvm.local.Status
-import com.example.movieappwithmvvm.local.db.AppDatabase
 import com.example.movieappwithmvvm.local.response.OnCardClick
 import com.example.movieappwithmvvm.local.response.ResultModel
 import com.example.movieappwithmvvm.ui.adapter.MovieAdapter
 import com.example.movieappwithmvvm.ui.adapter.NewMovieAdapter
 import com.example.movieappwithmvvm.viewmodels.AppViewModel
 import dagger.hilt.android.AndroidEntryPoint
-import kotlinx.coroutines.CoroutineScope
-import kotlinx.coroutines.Dispatchers
+import kotlinx.coroutines.flow.collect
 import kotlinx.coroutines.launch
 
 // TODO: Rename parameter arguments, choose names that match
@@ -44,7 +40,8 @@ class HomeFragment : Fragment(), OnCardClick {
     private lateinit var homeBinding: FragmentHomeBinding
     lateinit var movieAdapter: MovieAdapter
     private var emptyList = emptyList<ResultModel>()
-    // private var myData = ArrayList<ResultModel>()
+    private var resultList: List<ResultModel> =
+        emptyList() // Global variable to hold the list of ResultModel items
 
 
     override fun onCreate(savedInstanceState: Bundle?) {
@@ -69,33 +66,24 @@ class HomeFragment : Fragment(), OnCardClick {
         super.onViewCreated(view, savedInstanceState)
         setAdapter()
 
-        viewModel.getMovieResponse().observe(viewLifecycleOwner, Observer {
-            it?.let {
-                CoroutineScope(Dispatchers.IO).launch {
-                    movieAdapter.submitData(it)
-                }
+        // Observe the PagingData<ResultModel> from the ViewModel
+        viewLifecycleOwner.lifecycleScope.launch {
+            viewModel.getMovieResponse().collect { pagingData ->
+                // Submit the paging data to the adapter
+                movieAdapter.submitData(pagingData)
             }
-        })
-
+        }
 
         if (savedInstanceState == null) {
             // No saved instance state, make the API call
             Log.d("TAG", "onViewCreated: " + "here in line no 82")
-            viewModel.getResponseFromAPI(1).observe(viewLifecycleOwner, Observer {
-                when (it.status) {
-                    Status.ERROR -> {
-                        Toast.makeText(context, "Error", Toast.LENGTH_SHORT).show()
-                    }
-
-                    Status.SUCCESS -> {
-                        emptyList = it.data?.resultModels as ArrayList<ResultModel>
-                        val adaptor = NewMovieAdapter(emptyList, this)
-                        homeBinding.rvTopMovies.adapter = adaptor
-                    }
-
-                    Status.LOADING -> TODO()
-                }
+            viewModel.liveData.observe(viewLifecycleOwner, Observer {
+                emptyList = it
+                Log.d("TAG", "onViewCreated: " + " here in line no 83" + emptyList)
+                val adaptor = NewMovieAdapter(emptyList, this)
+                homeBinding.rvTopMovies.adapter = adaptor
             })
+
 
         } else {
             // Use data from saved instance state
@@ -134,6 +122,7 @@ class HomeFragment : Fragment(), OnCardClick {
         super.onViewStateRestored(savedInstanceState)
         savedInstanceState?.let {
             emptyList = it.getSerializable("data") as ArrayList<ResultModel>
+
             // Now you can use myData after restoring
         }
 

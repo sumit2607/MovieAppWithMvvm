@@ -1,31 +1,32 @@
 package com.example.movieappwithmvvm.viewmodels
 
-import android.content.Context
-import android.util.Log
 import androidx.lifecycle.LiveData
 import androidx.lifecycle.ViewModel
-import androidx.lifecycle.liveData
-import com.example.movieappwithmvvm.local.Resource
-import com.example.movieappwithmvvm.local.response.ResponseModel
+import androidx.lifecycle.viewModelScope
+import androidx.paging.PagingData
+import androidx.paging.cachedIn
+import com.example.movieappwithmvvm.local.response.ResultModel
 import com.example.movieappwithmvvm.repositories.AppRepo
 import dagger.hilt.android.lifecycle.HiltViewModel
-import kotlinx.coroutines.Dispatchers
+import kotlinx.coroutines.flow.Flow
+import kotlinx.coroutines.launch
 import javax.inject.Inject
 
 @HiltViewModel
 class AppViewModel @Inject constructor(private val appRepo: AppRepo) : ViewModel() {
 
-    fun getMovieResponse() = appRepo.getPageList()
-
-
-    fun getResponseFromAPI(page: Int): LiveData<Resource<ResponseModel>> {
-        return liveData(Dispatchers.IO) {
-            val response = appRepo.getResponseFromAPI(page)
-            Log.d("TAG", "getResponseFromAPI: " + "here in line no 23 " + response)
-            emit(response)
-        }
-
+    fun getMovieResponse(): Flow<PagingData<ResultModel>> {
+        return appRepo.getPageList()
+            .cachedIn(viewModelScope) // Ensure the data is cached in the ViewModel's scope
     }
+    val liveData: LiveData<List<ResultModel>>
+        get() = appRepo.products
 
+
+    init {
+        viewModelScope.launch {
+            appRepo.getResponseFromAPI(1)
+        }
+    }
 
 }
